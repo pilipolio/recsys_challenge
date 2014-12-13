@@ -1,0 +1,36 @@
+import os
+
+import numpy as np
+import pandas as pd
+
+from base import Session, evaluate
+
+
+if __name__ == '__main__':
+    data_directory = '/home/guillaume/Documents/recsys_challenge/yoochoose-data'
+    clicks_and_buys = pd.read_pickle(os.path.join(data_directory, 'clicks_and_buys.df'))
+    test_clicks = pd.read_pickle(os.path.join(data_directory, 'test_clicks.df'))
+
+    validation_clicks_and_buys = clicks_and_buys.iloc[:1000000,:]
+    validation_sessions = Session.group_validation_sessions(
+        validation_clicks_and_buys[['SESSION_ID', 'ITEM_ID', 'N_BUYS']].values)
+
+    n_clicks_threshold = 3
+    predicted_validation_clicks = validation_clicks_and_buys[validation_clicks_and_buys.N_CLICKS >= n_clicks_threshold]
+    predicted_validation_sessions = Session.group_sessions(
+        predicted_validation_clicks[['SESSION_ID', 'ITEM_ID']].values)
+
+    print evaluate(predicted_validation_sessions, validation_sessions)
+
+    n_clicks_threshold = 3
+    predicted_test_clicks = test_clicks[test_clicks.N_CLICKS >= n_clicks_threshold]
+
+    # BUY / CLICK ratio = 0.0394
+    print predicted_test_clicks.shape[0] / float(test_clicks.shape[0])
+    
+    predicted_sessions = Session.group_sessions(
+        predicted_test_clicks[['SESSION_ID', 'ITEM_ID']].values)
+        
+    with open('./solutions/test_items_with_3clicks_solution.dat', 'w') as fp:
+        fp.writelines(session.to_csv_line() for session in predicted_sessions)
+
