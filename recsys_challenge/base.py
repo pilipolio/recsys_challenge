@@ -104,8 +104,8 @@ def buying_session_ratio(test_sessions):
     return len([t for t in test_sessions if t.has_bought]) / float(len(test_sessions))
 
 
-def validation_dataset(clicks_and_buys):
-    validation_indexes = np.random.permutation(np.arange(clicks_and_buys.shape[0]))[:1000000]
+def validation_dataset(clicks_and_buys, size):
+    validation_indexes = np.random.permutation(np.arange(clicks_and_buys.shape[0]))[:size]
     validation_clicks_and_buys = clicks_and_buys.iloc[validation_indexes,:]
     validation_sessions = Session.group_validation_sessions(
         validation_clicks_and_buys[['SESSION_ID', 'ITEM_ID', 'N_BUYS']].values)

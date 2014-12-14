@@ -39,7 +39,7 @@ if __name__ == '__main__':
     clicks_and_buys = pd.read_pickle(os.path.join(data_directory, 'clicks_and_buys.df'))
     test_clicks = pd.read_pickle(os.path.join(data_directory, 'test_clicks.df'))
 
-    validation_clicks_and_buys, validation_sessions = validation_dataset(clicks_and_buys)
+    validation_clicks_and_buys, validation_sessions = validation_dataset(clicks_and_buys, size=1000000)
 
     item_stats = item_statistics(clicks_and_buys)
 
