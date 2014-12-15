@@ -35,7 +35,7 @@ def to_pickled_df(data_directory, **kwargs):
         
     
 if __name__ == '__main__':
-    data_directory = '/home/guillaume/Documents/recsys_challenge/yoochoose-data'
+    data_directory = 'data'
     buys, clicks, test_clicks = from_csv_in_directory(data_directory)
     clicks_and_buys, test_clicks = to_time_collapsed(buys, clicks, test_clicks)
     to_pickled_df(data_directory, clicks_and_buys=clicks_and_buys, test_clicks=test_clicks)
