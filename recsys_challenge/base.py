@@ -40,7 +40,7 @@ class Session(namedtuple('Session', ['id', 'item_ids'])):
 
     def to_csv_line(self):
         return '{session_id};{item_ids_csv}\n'.format(
-            session_id=self.id, item_ids_csv=','.join(map(str, self.item_ids)))
+            session_id=int(self.id), item_ids_csv=','.join(map('{:.0f}'.format, self.item_ids)))
 
 # http://2015.recsyschallenge.com/challenge.html
 EvaluationMeasure = namedtuple(

@@ -57,5 +57,5 @@ if __name__ == '__main__':
     # Gives a buy/click ratio of .0525 and ~11,000 on http://2015.recsyschallenge.com/submission.html
     predicted_test_sessions = predict_sessions(test_clicks, item_stats, rate_threshold=.1)
 
-    with open('./solutions/most_likely_bought_when_seen_solution.dat', 'w') as fp:
+    with open('./solutions/item_bought_p10_when_seen_solution.dat', 'w') as fp:
         fp.writelines(session.to_csv_line() for session in predicted_test_sessions)
